@@ -153,7 +153,7 @@ fn test_constants_clone() {
 #[test]
 fn test_constants_debug() {
     let constants: LinksConstants<u64> = LinksConstants::new();
-    let debug_str = format!("{:?}", constants);
+    let debug_str = format!("{constants:?}");
     assert!(debug_str.contains("LinksConstants"));
 }
 

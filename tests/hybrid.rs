@@ -100,7 +100,7 @@ fn test_hybrid_copy() {
 #[test]
 fn test_hybrid_debug() {
     let hybrid = Hybrid::<usize>::internal(42);
-    let debug_str = format!("{:?}", hybrid);
+    let debug_str = format!("{hybrid:?}");
     assert!(debug_str.contains("Hybrid"));
 }
 

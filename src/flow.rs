@@ -13,18 +13,18 @@ pub enum Flow {
 
 impl Flow {
     /// Returns `true` if this is `Flow::Continue`.
-    pub fn is_continue(&self) -> bool {
-        matches!(self, Flow::Continue)
+    #[must_use]
+    pub const fn is_continue(&self) -> bool {
+        matches!(self, Self::Continue)
     }
 
     /// Returns `true` if this is `Flow::Break`.
-    pub fn is_break(&self) -> bool {
-        matches!(self, Flow::Break)
+    #[must_use]
+    pub const fn is_break(&self) -> bool {
+        matches!(self, Self::Break)
     }
 
-    /// Converts this Flow into a ControlFlow that can be used with try_for_each.
-    ///
-    /// This method enables using Flow with iterator methods like `try_for_each`:
+    /// Converts this `Flow` into a `ControlFlow` that can be used with `try_for_each`.
     ///
     /// ```
     /// use platform_data::Flow;
@@ -37,10 +37,10 @@ impl Flow {
     /// });
     /// assert_eq!(count, 6);
     /// ```
-    pub fn into_control_flow(self) -> ControlFlow<()> {
+    pub const fn into_control_flow(self) -> ControlFlow<()> {
         match self {
-            Flow::Continue => ControlFlow::Continue(()),
-            Flow::Break => ControlFlow::Break(()),
+            Self::Continue => ControlFlow::Continue(()),
+            Self::Break => ControlFlow::Break(()),
         }
     }
 }
@@ -48,8 +48,8 @@ impl Flow {
 impl<C, B> From<ControlFlow<C, B>> for Flow {
     fn from(flow: ControlFlow<C, B>) -> Self {
         match flow {
-            ControlFlow::Continue(_) => Flow::Continue,
-            ControlFlow::Break(_) => Flow::Break,
+            ControlFlow::Continue(_) => Self::Continue,
+            ControlFlow::Break(_) => Self::Break,
         }
     }
 }
@@ -57,8 +57,8 @@ impl<C, B> From<ControlFlow<C, B>> for Flow {
 impl From<Flow> for ControlFlow<()> {
     fn from(flow: Flow) -> Self {
         match flow {
-            Flow::Continue => ControlFlow::Continue(()),
-            Flow::Break => ControlFlow::Break(()),
+            Flow::Continue => Self::Continue(()),
+            Flow::Break => Self::Break(()),
         }
     }
 }
