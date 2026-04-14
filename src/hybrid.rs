@@ -42,7 +42,9 @@ impl<T: LinkType> Hybrid<T> {
     }
 
     pub fn abs(&self) -> T {
-        self.value.wrapping_add(&T::from_byte(1)).wrapping_add(&T::MAX)
+        self.value
+            .wrapping_add(&T::from_byte(1))
+            .wrapping_add(&T::MAX)
     }
 
     pub const fn as_inner(&self) -> T {
