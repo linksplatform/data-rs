@@ -57,18 +57,22 @@ impl<T: LinkType> LinksConstants<T> {
         Self::full_new(Self::default_target_part(), internal, external)
     }
 
+    #[must_use]
     pub fn via_only_external(external: bool) -> Self {
         Self::via_external(Self::default_target_part(), external)
     }
 
+    #[must_use]
     pub fn external() -> Self {
         Self::via_only_external(true)
     }
 
+    #[must_use]
     pub fn internal() -> Self {
         Self::via_only_external(false)
     }
 
+    #[must_use]
     pub fn new() -> Self {
         Self::internal()
     }

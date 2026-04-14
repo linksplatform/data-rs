@@ -1,4 +1,4 @@
-use platform_data::{query, Query, ToQuery};
+use platform_data::{Query, ToQuery, query};
 
 #[test]
 fn by_ref() {
@@ -84,7 +84,7 @@ fn test_query_clone() {
 #[test]
 fn test_query_debug() {
     let query: Query<i32> = query![1, 2, 3];
-    let debug_str = format!("{:?}", query);
+    let debug_str = format!("{query:?}");
     assert!(debug_str.contains("Query"));
 }
 

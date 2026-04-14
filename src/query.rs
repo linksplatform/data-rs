@@ -12,24 +12,28 @@ impl<'a, T: Clone> Query<'a, T> {
         Query(beef.into())
     }
 
+    #[must_use]
     pub fn is_empty(&self) -> bool {
         self.0.is_empty()
     }
 
+    #[must_use]
     pub fn len(&self) -> usize {
         self.0.len()
     }
 
+    #[must_use]
     pub fn into_inner(self) -> Cow<'a, [T]> {
         self.0
     }
 
+    #[must_use]
     pub fn into_owned(self) -> Vec<T> {
         self.0.into_owned()
     }
 }
 
-impl<'a, I: SliceIndex<[T]>, T: Clone> Index<I> for Query<'a, T> {
+impl<I: SliceIndex<[T]>, T: Clone> Index<I> for Query<'_, T> {
     type Output = I::Output;
 
     fn index(&self, index: I) -> &Self::Output {

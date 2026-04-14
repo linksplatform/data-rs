@@ -6,10 +6,11 @@ pub struct Hybrid<T> {
 }
 
 impl<T: LinkType> Hybrid<T> {
-    pub fn new(value: T) -> Self {
+    pub const fn new(value: T) -> Self {
         Self::internal(value)
     }
 
+    #[must_use]
     pub fn half() -> T {
         T::MAX / T::funty(2)
     }
@@ -20,7 +21,7 @@ impl<T: LinkType> Hybrid<T> {
         }
     }
 
-    pub fn internal(value: T) -> Self {
+    pub const fn internal(value: T) -> Self {
         Self { value }
     }
 
