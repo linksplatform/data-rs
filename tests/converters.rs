@@ -49,11 +49,15 @@ fn test_addr_to_raw_roundtrip_usize() {
 }
 
 #[test]
-fn test_addr_to_raw_default() {
-    let _converter = AddrToRaw::default();
+fn test_addr_to_raw_zero() {
+    let raw = AddrToRaw.convert(0u64);
+    let addr = RawToAddr.convert(raw);
+    assert_eq!(addr, 0);
 }
 
 #[test]
-fn test_raw_to_addr_default() {
-    let _converter = RawToAddr::default();
+fn test_raw_to_addr_zero() {
+    let addr = RawToAddr.convert(0u64);
+    let raw = AddrToRaw.convert(addr);
+    assert_eq!(raw, 0);
 }
