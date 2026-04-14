@@ -4,11 +4,11 @@ bump: major
 
 ### Changed
 - Replaced `funty` dependency with `platform-num` (`LinkReference` trait)
-- `LinkType` now extends `LinkReference` from `platform-num` instead of `funty::Unsigned`
+- Replaced all `LinkType` bounds with `LinkReference` from `platform-num`
 - Replaced `FuntyPart::funty(n)` calls with `LinkReference::from_byte(n)`
-- Added `num-traits` dependency for `WrappingAdd` support
 
 ### Removed
 - Removed `funty` dependency
+- Removed `LinkType` trait entirely (replaced by `LinkReference`)
 - Removed `FuntyPart` trait (replaced by `LinkReference::from_byte`)
-- Removed all explicit `TryFrom`/`TryInto` bounds from `LinkType` (now provided by `LinkReference`)
+- Removed `link_type.rs` module
