@@ -1,4 +1,3 @@
-use num_traits::WrappingAdd;
 use platform_num::LinkReference;
 
 #[derive(Debug, Clone, Copy, Hash, PartialOrd, PartialEq, Ord, Eq)]
@@ -6,7 +5,7 @@ pub struct Hybrid<T> {
     value: T,
 }
 
-impl<T: LinkReference + WrappingAdd> Hybrid<T> {
+impl<T: LinkReference> Hybrid<T> {
     pub const fn new(value: T) -> Self {
         Self::internal(value)
     }

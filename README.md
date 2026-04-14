@@ -162,8 +162,7 @@ This crate requires **Rust 1.85 or later** (stable toolchain, edition 2024).
 ## Dependencies
 
 - [beef](https://crates.io/crates/beef) — Faster and more compact Cow implementation
-- [platform-num](https://crates.io/crates/platform-num) — Numeric traits for the Links Platform
-- [num-traits](https://crates.io/crates/num-traits) — Numeric traits (`WrappingAdd`)
+- [platform-num](https://crates.io/crates/platform-num) — Numeric traits for the Links Platform (`LinkReference`, `WrappingAdd`, etc.)
 - [thiserror](https://crates.io/crates/thiserror) — Derive macro for error types
 
 ## Documentation

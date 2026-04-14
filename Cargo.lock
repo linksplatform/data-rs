@@ -170,7 +170,6 @@ name = "platform-data"
 version = "1.0.0"
 dependencies = [
  "beef",
- "num-traits",
  "platform-num",
  "quickcheck",
  "quickcheck_macros",
@@ -179,9 +178,9 @@ dependencies = [
 
 [[package]]
 name = "platform-num"
-version = "0.7.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1e56c23d5941ec71f27ae66257c92adf2450f2c94c47b5a37529453dcb3b26be"
+checksum = "2c4ca8e18138b1c90ad802aff931f946a0e6bd760c35af30f1ff2489489ab54a"
 dependencies = [
  "num-traits",
 ]

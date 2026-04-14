@@ -1,11 +1,10 @@
 use std::ops::RangeInclusive;
 
 use crate::Hybrid;
-use num_traits::WrappingAdd;
 use platform_num::LinkReference;
 
 #[derive(Clone, Eq, PartialEq, Debug)]
-pub struct LinksConstants<T: LinkReference + WrappingAdd> {
+pub struct LinksConstants<T: LinkReference> {
     pub index_part: T,
     pub source_part: T,
     pub target_part: T,
@@ -20,7 +19,7 @@ pub struct LinksConstants<T: LinkReference + WrappingAdd> {
     pub external_range: Option<RangeInclusive<T>>,
 }
 
-impl<T: LinkReference + WrappingAdd> LinksConstants<T> {
+impl<T: LinkReference> LinksConstants<T> {
     fn default_target_part() -> T {
         T::from_byte(2)
     }
@@ -110,7 +109,7 @@ impl<T: LinkReference + WrappingAdd> LinksConstants<T> {
     }
 }
 
-impl<T: LinkReference + WrappingAdd> Default for LinksConstants<T> {
+impl<T: LinkReference> Default for LinksConstants<T> {
     fn default() -> Self {
         Self::new()
     }
