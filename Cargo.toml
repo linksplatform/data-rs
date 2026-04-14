@@ -14,7 +14,8 @@ categories = ["data-structures"]
 
 [dependencies]
 beef = "0.5.2"
-funty = "2.0.0"
+num-traits = "0.2"
+platform-num = "0.7.0"
 thiserror = "2.0.18"
 
 [dev-dependencies]

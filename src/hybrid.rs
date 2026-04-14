@@ -12,7 +12,7 @@ impl<T: LinkType> Hybrid<T> {
 
     #[must_use]
     pub fn half() -> T {
-        T::MAX / T::funty(2)
+        T::MAX / T::from_byte(2)
     }
 
     pub fn external(value: T) -> Self {
@@ -26,11 +26,11 @@ impl<T: LinkType> Hybrid<T> {
     }
 
     fn extend_value(value: T) -> T {
-        (T::MAX - value).wrapping_add(T::funty(1))
+        (T::MAX - value).wrapping_add(&T::from_byte(1))
     }
 
     pub fn is_zero(&self) -> bool {
-        self.value == T::funty(0)
+        self.value == T::from_byte(0)
     }
 
     pub fn is_internal(&self) -> bool {
@@ -38,11 +38,11 @@ impl<T: LinkType> Hybrid<T> {
     }
 
     pub fn is_external(&self) -> bool {
-        !self.is_internal() || self.value == T::funty(0)
+        !self.is_internal() || self.value == T::from_byte(0)
     }
 
     pub fn abs(&self) -> T {
-        self.value.wrapping_add(T::funty(1)).wrapping_add(T::MAX)
+        self.value.wrapping_add(&T::from_byte(1)).wrapping_add(&T::MAX)
     }
 
     pub const fn as_inner(&self) -> T {

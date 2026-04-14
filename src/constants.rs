@@ -20,7 +20,7 @@ pub struct LinksConstants<T: LinkType> {
 
 impl<T: LinkType> LinksConstants<T> {
     fn default_target_part() -> T {
-        T::funty(2)
+        T::from_byte(2)
     }
 
     pub fn full_new(
@@ -29,17 +29,17 @@ impl<T: LinkType> LinksConstants<T> {
         external: Option<RangeInclusive<T>>,
     ) -> Self {
         Self {
-            index_part: T::funty(0),
-            source_part: T::funty(1),
+            index_part: T::from_byte(0),
+            source_part: T::from_byte(1),
             target_part,
-            null: T::funty(0),
+            null: T::from_byte(0),
             r#continue: *internal.end(),
-            r#break: *internal.end() - T::funty(1),
-            skip: *internal.end() - T::funty(2),
-            any: *internal.end() - T::funty(3),
-            itself: *internal.end() - T::funty(4),
-            error: *internal.end() - T::funty(5),
-            internal_range: *internal.start()..=*internal.end() - T::funty(6),
+            r#break: *internal.end() - T::from_byte(1),
+            skip: *internal.end() - T::from_byte(2),
+            any: *internal.end() - T::from_byte(3),
+            itself: *internal.end() - T::from_byte(4),
+            error: *internal.end() - T::from_byte(5),
+            internal_range: *internal.start()..=*internal.end() - T::from_byte(6),
             external_range: external,
         }
     }
@@ -79,9 +79,9 @@ impl<T: LinkType> LinksConstants<T> {
 
     fn default_internal(external: bool) -> RangeInclusive<T> {
         if external {
-            T::funty(1)..=Hybrid::half()
+            T::from_byte(1)..=Hybrid::half()
         } else {
-            T::funty(1)..=T::MAX
+            T::from_byte(1)..=T::MAX
         }
     }
 
