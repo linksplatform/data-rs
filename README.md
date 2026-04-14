@@ -1,8 +1,9 @@
 [![Crates.io](https://img.shields.io/crates/v/platform-data.svg?label=crates.io&style=flat)](https://crates.io/crates/platform-data)
 [![Docs.rs](https://docs.rs/platform-data/badge.svg)](https://docs.rs/platform-data)
-[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://github.com/linksplatform/core-rs/blob/main/LICENSE)
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://github.com/linksplatform/data-rs/blob/main/LICENSE)
+[![CI](https://github.com/linksplatform/data-rs/actions/workflows/release.yml/badge.svg)](https://github.com/linksplatform/data-rs/actions/workflows/release.yml)
 
-# [Data](https://github.com/linksplatform/core-rs)
+# [Data](https://github.com/linksplatform/data-rs)
 
 LinksPlatform's Platform.Data Class Library for Rust.
 
@@ -156,13 +157,19 @@ use platform_data::{Links, LinkType, LinksConstants, Flow, Error, ReadHandler, W
 
 ## Requirements
 
-This crate requires **Rust 1.79 or later** (stable toolchain). The `associated_type_bounds` feature used for `Error:` bounds was stabilized in Rust 1.79.
+This crate requires **Rust 1.85 or later** (stable toolchain, edition 2024).
 
 ## Dependencies
 
 - [beef](https://crates.io/crates/beef) — Faster and more compact Cow implementation
 - [funty](https://crates.io/crates/funty) — Fundamental type unification
 - [thiserror](https://crates.io/crates/thiserror) — Derive macro for error types
+
+## Documentation
+
+API documentation is available on [docs.rs](https://docs.rs/platform-data).
+
+Generated documentation is also deployed to GitHub Pages after each release.
 
 ## Related Projects
 

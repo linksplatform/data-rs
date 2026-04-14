@@ -7,8 +7,8 @@ Thank you for your interest in contributing! This document provides guidelines a
 1. **Fork and clone the repository**
 
    ```bash
-   git clone https://github.com/YOUR-USERNAME/core-rs.git
-   cd core-rs
+   git clone https://github.com/YOUR-USERNAME/data-rs.git
+   cd data-rs
    ```
 
 2. **Install Rust**
@@ -23,6 +23,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 
    ```bash
    rustup component add rustfmt clippy
+   cargo install rust-script
    ```
 
 4. **Install pre-commit hooks** (optional but recommended)
@@ -62,10 +63,10 @@ Thank you for your interest in contributing! This document provides guidelines a
    cargo clippy --all-targets --all-features
 
    # Check file sizes
-   node scripts/check-file-size.mjs
+   rust-script scripts/check-file-size.rs
 
    # Run all checks together
-   cargo fmt --check && cargo clippy --all-targets --all-features && node scripts/check-file-size.mjs
+   cargo fmt --check && cargo clippy --all-targets --all-features && rust-script scripts/check-file-size.rs
    ```
 
 4. **Run tests**
@@ -259,7 +260,8 @@ Fragments are automatically collected into CHANGELOG.md during the release proce
 ├── changelog.d/          # Changelog fragments
 │   ├── README.md         # Fragment instructions
 │   └── *.md              # Individual changelog fragments
-├── scripts/              # Utility scripts
+├── docs/                 # Documentation and case studies
+├── scripts/              # Rust CI/CD automation scripts
 ├── src/                  # Library source code
 ├── tests/                # Integration tests
 ├── .gitignore            # Git ignore patterns
@@ -281,8 +283,8 @@ This project uses semantic versioning (MAJOR.MINOR.PATCH):
 
 Releases are managed through GitHub releases. To trigger a release:
 
-1. Manually trigger the release workflow with a version bump type
-2. Or: Update the version in Cargo.toml and push to main
+1. Push to main with changelog fragments for automatic release
+2. Or: Manually trigger the release workflow with a version bump type
 
 ## Getting Help
 
