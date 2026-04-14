@@ -13,7 +13,7 @@ This crate provides core data types and traits for the [Links Platform](https://
 
 The `platform-data` crate provides:
 
-- **`LinkType`** — A trait defining the numeric types that can be used as link identifiers
+- **`LinkReference`** — A trait (from `platform-num`) defining the numeric types that can be used as link identifiers
 - **`Links`** — The core trait for CRUD operations on doublet links storage
 - **`Flow`** — Control flow type for iteration operations (Continue/Break)
 - **`Query`** — A wrapper for link queries using copy-on-write semantics
@@ -115,7 +115,7 @@ assert!(external.is_external());
 ### Implementing the Links trait
 
 ```rust
-use platform_data::{Links, LinkType, LinksConstants, Flow, Error, ReadHandler, WriteHandler};
+use platform_data::{Links, LinkReference, LinksConstants, Flow, Error, ReadHandler, WriteHandler};
 
 // The Links trait provides CRUD operations for doublet links:
 // - constants_links() - get storage configuration
@@ -132,7 +132,7 @@ use platform_data::{Links, LinkType, LinksConstants, Flow, Error, ReadHandler, W
 
 | Type | Description |
 |------|-------------|
-| `LinkType` | Trait bound for numeric types usable as link identifiers (unsigned integers) |
+| `LinkReference` | Trait bound (from `platform-num`) for numeric types usable as link identifiers (unsigned integers) |
 | `Links<T>` | Main trait defining CRUD operations for links storage |
 | `Flow` | Control flow enum: `Continue` or `Break` for iteration control |
 | `Query<'a, T>` | Copy-on-write query wrapper for efficient link queries |
@@ -162,7 +162,7 @@ This crate requires **Rust 1.85 or later** (stable toolchain, edition 2024).
 ## Dependencies
 
 - [beef](https://crates.io/crates/beef) — Faster and more compact Cow implementation
-- [funty](https://crates.io/crates/funty) — Fundamental type unification
+- [platform-num](https://crates.io/crates/platform-num) — Numeric traits for the Links Platform (`LinkReference`, `WrappingAdd`, etc.)
 - [thiserror](https://crates.io/crates/thiserror) — Derive macro for error types
 
 ## Documentation

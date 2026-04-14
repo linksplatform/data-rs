@@ -1,8 +1,9 @@
-use crate::{Flow, LinkType, LinksConstants};
+use crate::{Flow, LinksConstants};
+use platform_num::LinkReference;
 use std::{borrow::Cow, error, io};
 
 #[derive(thiserror::Error, Debug)]
-pub enum Error<'a, T: LinkType> {
+pub enum Error<'a, T: LinkReference> {
     #[error("link {0} does not exist.")]
     NotExists(T),
 
@@ -26,7 +27,7 @@ pub type ReadHandler<'a, T> = &'a mut dyn FnMut(&[T]) -> Flow;
 
 pub type WriteHandler<'a, T> = &'a mut dyn FnMut(&[T], &[T]) -> Flow;
 
-pub trait Links<T: LinkType> {
+pub trait Links<T: LinkReference> {
     fn constants_links(&self) -> LinksConstants<T>;
 
     fn count_links(&self, query: &[T]) -> T;
