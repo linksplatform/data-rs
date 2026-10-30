@@ -1,4 +1,107 @@
-use platform_data::LinksConstants;
+use platform_data::{LinkReference, LinksConstants};
+
+#[test]
+fn test_external_range_starts_after_continue_u32() {
+    let constants = LinksConstants::<u32>::external();
+
+    assert!(!constants.is_external(constants.r#continue));
+    assert!(!constants.is_reference(constants.r#continue));
+    assert_eq!(constants.r#continue, 2_147_483_647);
+    assert_eq!(constants.internal_range, 1..=2_147_483_641);
+    assert_eq!(constants.external_range, Some(2_147_483_648..=u32::MAX));
+}
+
+fn assert_external_boundaries<T: LinkReference>() {
+    let half = T::MAX / T::from_byte(2);
+    let first_external = half + T::from_byte(1);
+    for constants in [
+        LinksConstants::<T>::external(),
+        LinksConstants::via_only_external(true),
+        LinksConstants::via_external(T::from_byte(5), true),
+    ] {
+        assert_eq!(constants.r#continue, half);
+        assert_eq!(
+            constants.internal_range,
+            T::from_byte(1)..=half - T::from_byte(6)
+        );
+        assert_eq!(constants.external_range, Some(first_external..=T::MAX));
+        assert!(!constants.is_reference(constants.null));
+        for service in [
+            constants.r#continue,
+            constants.r#break,
+            constants.skip,
+            constants.any,
+            constants.itself,
+            constants.error,
+        ] {
+            assert!(!constants.is_internal(service));
+            assert!(!constants.is_external(service));
+            assert!(!constants.is_reference(service));
+        }
+        for internal in [
+            *constants.internal_range.start(),
+            *constants.internal_range.end(),
+        ] {
+            assert!(constants.is_internal(internal));
+            assert!(!constants.is_external(internal));
+            assert!(constants.is_reference(internal));
+        }
+        for external in [first_external, T::MAX] {
+            assert!(!constants.is_internal(external));
+            assert!(constants.is_external(external));
+            assert!(constants.is_reference(external));
+        }
+    }
+}
+
+#[test]
+fn test_external_boundaries_for_all_unsigned_address_types() {
+    assert_external_boundaries::<u8>();
+    assert_external_boundaries::<u16>();
+    assert_external_boundaries::<u32>();
+    assert_external_boundaries::<u64>();
+    assert_external_boundaries::<u128>();
+    assert_external_boundaries::<usize>();
+}
+
+#[test]
+#[should_panic(
+    expected = "external range must not overlap the internal range or reserved service values"
+)]
+fn test_full_new_rejects_external_overlap_with_continue() {
+    LinksConstants::<u32>::full_new(2, 1..=100, Some(100..=200));
+}
+
+#[test]
+fn test_via_ranges_rejects_overlapping_external_ranges() {
+    for external in [1..=10, 20..=30, 94..=99, 95..=100, 1..=200] {
+        assert!(
+            std::panic::catch_unwind(|| {
+                LinksConstants::<u32>::via_ranges(10..=100, Some(external.clone()))
+            })
+            .is_err(),
+            "accepted overlapping external range {external:?}"
+        );
+    }
+}
+
+#[test]
+fn test_via_ranges_preserves_disjoint_and_empty_external_ranges() {
+    for external in [
+        None,
+        Some(1..=9),
+        Some(101..=200),
+        Some(std::ops::RangeInclusive::new(200, 101)),
+    ] {
+        let constants = LinksConstants::<u32>::via_ranges(10..=100, external.clone());
+        assert_eq!(constants.internal_range, 10..=94);
+        assert_eq!(constants.r#continue, 100);
+        assert_eq!(constants.external_range, external);
+        for service in [95, 96, 97, 98, 99, 100] {
+            assert!(!constants.is_reference(service));
+        }
+    }
+}
 
 #[test]
 fn test_new_creates_internal_constants() {
