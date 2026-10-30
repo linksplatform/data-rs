@@ -24,11 +24,25 @@ impl<T: LinkReference> LinksConstants<T> {
         T::from_byte(2)
     }
 
+    /// Creates constants with custom ranges, reserving the last six internal values for service constants.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the external range overlaps the supplied internal range, including its service values.
     pub fn full_new(
         target_part: T,
         internal: RangeInclusive<T>,
         external: Option<RangeInclusive<T>>,
     ) -> Self {
+        if let Some(external) = external.as_ref() {
+            assert!(
+                external.is_empty()
+                    || external.end() < internal.start()
+                    || external.start() > internal.end(),
+                "external range must not overlap the internal range or reserved service values"
+            );
+        }
+
         Self {
             index_part: T::from_byte(0),
             source_part: T::from_byte(1),
@@ -54,6 +68,11 @@ impl<T: LinkReference> LinksConstants<T> {
         )
     }
 
+    /// Creates constants with the default target part and custom ranges.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the external range overlaps the supplied internal range, including its service values.
     pub fn via_ranges(internal: RangeInclusive<T>, external: Option<RangeInclusive<T>>) -> Self {
         Self::full_new(Self::default_target_part(), internal, external)
     }
@@ -63,6 +82,7 @@ impl<T: LinkReference> LinksConstants<T> {
         Self::via_external(Self::default_target_part(), external)
     }
 
+    /// Creates constants with external references starting immediately after the service values.
     #[must_use]
     pub fn external() -> Self {
         Self::via_only_external(true)
@@ -88,7 +108,7 @@ impl<T: LinkReference> LinksConstants<T> {
 
     fn default_external(external: bool) -> Option<RangeInclusive<T>> {
         if external {
-            Some(Hybrid::half()..=T::MAX)
+            Some(Hybrid::<T>::half() + T::from_byte(1)..=T::MAX)
         } else {
             None
         }
